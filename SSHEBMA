@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contador de Tiempo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .contador {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .contador h1 {
+      margin-bottom: 20px;
+    }
+    .tiempo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="contador">
+    <h1>Contador desde el 1 de enero de 2023</h1>
+    <div class="tiempo" id="contador"></div>
+  </div>
+
+  <script>
+    function actualizarContador() {
+      const inicio = new Date('2022-01-01T00:00:00');
+      const ahora = new Date();
+
+      let años = ahora.getFullYear() - inicio.getFullYear();
+      let meses = ahora.getMonth() - inicio.getMonth();
+      let días = ahora.getDate() - inicio.getDate();
+      let horas = ahora.getHours() - inicio.getHours();
+      let minutos = ahora.getMinutes() - inicio.getMinutes();
+
+      if (minutos < 0) {
+        minutos += 60;
+        horas--;
+      }
+      if (horas < 0) {
+        horas += 24;
+        días--;
+      }
+      if (días < 0) {
+        const mesAnterior = new Date(ahora.getFullYear(), ahora.getMonth(), 0);
+        días += mesAnterior.getDate();
+        meses--;
+      }
+      if (meses < 0) {
+        meses += 12;
+        años--;
+      }
+
+      const texto = `${años * 12 + meses} meses, ${días} días, ${horas} horas, ${minutos} minutos`;
+      document.getElementById("contador").textContent = texto;
+    }
+
+    actualizarContador();
+    setInterval(actualizarContador, 60000); // Actualiza cada minuto
+  </script>
+</body>
+</html>
